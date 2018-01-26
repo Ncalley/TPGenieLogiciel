@@ -17,6 +17,25 @@ public class Coffee {
     public static void main(String[] args) {
         // TODO code application logic here
         Machine m = new Machine();
+
+
+    }
+
+    public void acheterBoisson() {
+        System.out.println("Choisisez votre Boisson");
+        System.out.println(m.getBoissons());
+        String choiceUserBoisson = sc.nextLine();
+
+        for (String boisson : m.getBoissons() ) {
+        	if (choiceUserBoisson == boisson) {
+        		m.acheter(choiceUserBoisson);
+        	} else {
+        		System.out.print("Votre choix n'existe pas, Veuillez reessayer");
+        		acheterBoisson();
+        	}
+        	
+        }
+
     }
     
 }

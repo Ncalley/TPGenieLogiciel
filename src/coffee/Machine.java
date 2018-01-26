@@ -5,8 +5,11 @@ import java.util.Scanner;
 
 class Machine {
 
+    Scanner sc = new Scanner(System.in);
 	private Boisson[] boissons = new Boisson[3];
 	private ArrayList<Ingredient> stocks;
+
+
 
     public Machine(ArrayList<Ingredient> stocks) {
         this.stocks = stocks;
@@ -22,8 +25,9 @@ class Machine {
     public void ajouterBoisson(Boisson b){
     }
     
-    public Boisson[] getBoissons() {
-        return boissons;
+    //TODO NICO DISPLAY LIST OF BOISSONS
+    public String getBoissons() {
+        return null;
     }
 
     public void setBoissons(Boisson[] boissons) {
