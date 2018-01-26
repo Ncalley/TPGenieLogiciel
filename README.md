@@ -11,11 +11,11 @@
 ## Specifications client
 
 - La machine peut faire les actions suivantes
-'''
+```
 - Acheter boisson
 - Ajouter boisson
 - Modifier boisson
 - Supprimer boisson
 - Ajouter ingredient
 - Verifier stocks ingredients
-'''
+```
