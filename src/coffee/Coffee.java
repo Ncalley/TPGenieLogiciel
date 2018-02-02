@@ -5,6 +5,8 @@
  */
 package coffee;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Nicolas
@@ -17,25 +19,30 @@ public class Coffee {
     public static void main(String[] args) {
         // TODO code application logic here
         Machine m = new Machine();
-
-
-    }
-
-    public void acheterBoisson() {
-        System.out.println("Choisisez votre Boisson");
-        System.out.println(m.getBoissons());
-        String choiceUserBoisson = sc.nextLine();
-
-        for (String boisson : m.getBoissons() ) {
-        	if (choiceUserBoisson == boisson) {
-        		m.acheter(choiceUserBoisson);
-        	} else {
-        		System.out.print("Votre choix n'existe pas, Veuillez reessayer");
-        		acheterBoisson();
-        	}
-        	
+        ArrayList<Ingredient> i = new ArrayList();
+        i.add(new Ingredient("Lait",1));
+        i.add(new Ingredient("Eau",1));
+        i.add(new Ingredient("Sucre",1));
+        i.add(new Ingredient("chocolat",1));
+        i.add(new Ingredient("Cafe",1));
+        
+        m.setStocks(i);
+        m.resupplyAll(25);
+        for(Ingredient I : m.getStocks()){
+            System.out.println(I.toString());
         }
 
+        ArrayList<Ingredient> i2 = new ArrayList();
+        i2.add(new Ingredient("Eau",2));
+        i2.add(new Ingredient("Sucre",1));
+        i2.add(new Ingredient("Cafe",1));
+        m.ajouterBoisson(new Boisson(i2,"cafe",5));
+        
+        //System.out.println(m.getBoissons());
+        
+        m.acheterBoisson();
+        
     }
+
     
 }

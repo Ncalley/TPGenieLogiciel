@@ -14,7 +14,7 @@ class Boisson {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private int prix;
 
-    public Boisson(ArrayList<Ingredient> ingredients, String nom, int prix) {
+    public Boisson(final ArrayList<Ingredient> ingredients, final String nom, final int prix) {
 
 	this.ingredients = ingredients;
 	this.nom = nom;
@@ -24,6 +24,10 @@ class Boisson {
     public Boisson(String nom, int prix) {
         this.nom = nom;
         this.prix = prix;
+    }
+    
+    public Boisson(String nom) {
+        this.nom = nom;
     }
 
     /**
@@ -81,4 +85,13 @@ class Boisson {
         return nom;
     }
 
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public int getPrix() {
+        return prix;
+    }
+
+    
 }

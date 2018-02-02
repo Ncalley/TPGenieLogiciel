@@ -12,7 +12,7 @@ class Ingredient  {
 	private int quantite;
 
     
-    public Ingredient(String nom, int quantite) {
+    public Ingredient(final String nom, final int quantite) {
         this.nom = nom;
         this.quantite = quantite;
     }
@@ -51,8 +51,24 @@ class Ingredient  {
         return nom + " : " + quantite + " Unites";
     }
     
+    /**
+     * Enlève i quantité d'ingrédient à cet ingrédient
+     * @param i 
+     */
+    public void decrease(int i) throws Exception {
+        if(i >= this.quantite){
+            throw new Exception("Quantité insuffisante: " + this.nom);
+        }
+        this.quantite -= i ;
+    }
     
-    
+    /**
+     * Ajoute i quantité d'ingrédient à cet ingrédient
+     * @param i 
+     */
+    public void resupply(int i){
+        this.quantite += i ;
+    }
     
     //getters / setters
     
