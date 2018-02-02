@@ -48,7 +48,7 @@ class Ingredient  {
      */
     @Override
     public String toString() {
-        return nom + " : " + quantite + " Unites";
+        return nom + " : " + quantite + " Unites ";
     }
     
     /**

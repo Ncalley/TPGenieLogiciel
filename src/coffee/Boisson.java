@@ -72,7 +72,7 @@ class Boisson {
         for(Ingredient i : ingredients){
             str.append(i.toString());
         }
-        str.append(new String(", prix=" + prix + '}'));
+        str.append(new String(", prix=" + this.prix + "€ "+ '}'));
         return  str.toString();
     }
 

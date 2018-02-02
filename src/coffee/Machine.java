@@ -8,7 +8,7 @@ class Machine {
     Scanner sc = new Scanner(System.in);
 	private ArrayList<Boisson> boissons = new ArrayList();
 	private ArrayList<Ingredient> stocks = new ArrayList();
-        private int maxBoisson = 3;
+        private int maxBoisson = 5;
 
 
 
@@ -29,18 +29,18 @@ class Machine {
         System.out.println(this.getBoissons());
         String choiceUserBoisson = sc.nextLine();
         Boisson b = new Boisson(choiceUserBoisson);
-        System.out.println(b.toString());
         boolean found = false;
         for (Boisson boisson : boissons ) {
-                
+                System.out.println(boisson);
             if (b.equals(boisson)) {
                 try{
+                    System.out.println(boisson.toString());
                     this.acheter(boisson);
                     found = true;
                 }catch(Exception e){
                     System.out.println(e.toString());
                     System.out.println("Votre boisson n'est pas disponible, veuillez reessayer\n");
-                    acheterBoisson();
+//                    acheterBoisson();
                 }
             }
         }
@@ -48,7 +48,7 @@ class Machine {
             System.out.print("Votre choix n'existe pas, veuillez reessayer\n");
         }
         if (!choiceUserBoisson.equals("Q")){
-            acheterBoisson();
+//            acheterBoisson();
         }
     }
     
@@ -87,6 +87,31 @@ class Machine {
         }
     }
     
+    public Boisson creerBoisson() {
+//    	Scanner sc = new Scanner(System.in);
+
+   	 System.out.println("Veuillez choisir un nom de boisson");
+   	 String name = sc.nextLine();
+   	 
+   	 System.out.println("Veuillez choisir le prix de boisson");
+   	 int price = sc.nextInt();
+   	 
+   	ArrayList<Ingredient> ib = new ArrayList();
+   	
+   	for (Ingredient i : stocks) {
+   		System.out.println("Combien d'unité de " +i.getNom()+ " voulez-vous mettre dans votre "+name+ " ?");
+   		int q = sc.nextInt();
+   		ib.add(new Ingredient(i.getNom(), q));
+   	}
+   	 
+   	 Boisson b = new Boisson(ib, name, price);
+   	 
+   	 System.out.println("La boisson "+b.getNom()+ " a été ajoutée");
+   	
+    	return b;
+    }
+    
+    
     public void resupply(Ingredient ingredient, int quantite){
         for(Ingredient i : stocks){
             if(i.equals(ingredient)){
@@ -117,5 +142,9 @@ class Machine {
     public void setStocks(final ArrayList<Ingredient> stocks) {
         this.stocks = stocks;
     }
+    
+    //TODO :
+    // Possibilité de modifier le niveau de sucre par boisson
+    // Persistance des ingrédients dans un fichier ou une bdd
     
 }
