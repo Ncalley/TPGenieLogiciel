@@ -89,12 +89,22 @@ public class Coffee {
         case 7 : 
         	resetStock(m);
         	break;
+        case 8 :
+        	resetAllStock(m);
         }
+        
     }
  
  
- private static void resetStock(Machine m) {
-	 System.out.println(" ");
+ private static void resetAllStock(Machine m) {
+	 System.out.println(" Choisissez la quantité à remettre (la même pour tous les ingrédients ");
+	 int stock = sc.nextInt();
+	 m.resupplyAll(stock);
+	
+}
+
+private static void resetStock(Machine m) {
+	 System.out.println(" Choisissez la quantité à remettre par ingrédient ");
 
 	
 }
