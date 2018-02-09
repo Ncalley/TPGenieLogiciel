@@ -1,12 +1,10 @@
 package coffee;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 class Machine {
 
-    Scanner sc = new Scanner(System.in);
 	private ArrayList<Boisson> boissons = new ArrayList();
 	private ArrayList<Ingredient> stocks = new ArrayList();
         private int maxBoisson = 5;
@@ -30,18 +28,17 @@ class Machine {
      * Fonction d'achat de boisson
      * Permet à l'utilisateur de choisir sa boisson et de commander
      */
-    public void acheterBoisson() {
+    public boolean acheterBoisson() {
         
-        String choix = c.controlStr("Quelle boisson voulez-vous ? \n "
-                + this.getBoissons()
-                + "Quitter", "Nom invalide");
-        Boisson b = new Boisson(choix);
         boolean found = false;
-        
-        if (!choix.equals("Quitter")){
-//            acheterBoisson();
-               found=true;
-        }else{
+        while(!found){
+            String choix = c.controlStr("Quelle boisson voulez-vous ? \n "
+                    + this.getBoissons()
+                    + "Quitter", "Nom invalide");
+            Boisson b = new Boisson(choix);
+            if("Quitter".equals(choix)){return true;}
+
+
             for (Boisson boisson : boissons ) {
                 if (b.equals(boisson)) {
                     try{
@@ -51,13 +48,15 @@ class Machine {
                     }catch(Exception e){
                         JOptionPane.showMessageDialog(null,e.getMessage()+"\n"
                                 + "Votre boisson n'est pas disponible, veuillez réessayer"  );
+                        found = true;
                     }
                 }
             }
-            if(found == false && !choix.equals("Quitter")){
+            if(found == false){
                 JOptionPane.showMessageDialog(null,"Votre choix n'existe pas, veuillez reessayer\n");
             }
         }
+        return true;
     }
     
     /**
@@ -107,7 +106,7 @@ class Machine {
      */
     public Boisson creerBoisson() {
         
-        String name = c.controlBoiss("Veuillez choisir un nom de boisson", "Le nom entré est invalide ou la boisson n'existe pas",boissons);
+        String name = c.controlBoiss("Veuillez choisir un nom de boisson", "Le nom entré est invalide ou la boisson existe déjà",boissons, false);
         
    	int price = c.control("Quel sera le prix de cette boisson?", "Prix invalide, veuillez réessayer"); 
    	
@@ -159,7 +158,7 @@ class Machine {
         String name = "";
         while(!valid){
             name = c.controlStr("Veuillez choisir un nom d'ingredient", "Nom d'ingrédient invalide");
-            if(c.controlNamedIng(name, "Ingrédient déjà dans le stock", stocks, true)){valid=true;}
+            if(c.controlNamedIng(name, "Ingrédient déjà dans le stock", stocks, false)){valid=true;}
         }
         int q = c.control("Combien d'unité de cet ingrédient voulez vous mettre dans le stock?", "Quantité invalide", true);
    	Ingredient i = new Ingredient(name,q);
@@ -178,19 +177,8 @@ class Machine {
      * @return 
      */
     public boolean modifierBoisson(){
-        boolean fini = false;
-        String name ="";
-        while(fini == false){
-            name = c.controlStr("Voici les boissons contenues dans la machine :\n"
-                                + this.getBoissons()
-                                + "Aucune : Quitter"
-                                + "Quelle boisson voulez-vous modifier ?", "Nom de boisson invalide");
-            if(name=="Quitter"){return false;};
-            
-            if(c.controlNamedBoiss(name, "Cette boisson n'est pas dans la machine", boissons, true)){
-                fini = true;
-            }
-        }
+        String name = selectBoisson();
+        if("Quitter".equals(name)){return false;}
         
         int price = c.control("Indiquez le nouveau prix de cette boisson", "Prix invalide");
         
@@ -203,6 +191,33 @@ class Machine {
    	 JOptionPane.showMessageDialog(null,"La boisson "+b.getNom()+ " a été modifiée");
    	return true;
         
+    }
+    
+    public boolean supprimerBoisson(){
+        String name = selectBoisson();
+        if("Quitter".equals(name)){return false;}
+        
+        this.boissons.remove(new Boisson(name));
+        JOptionPane.showMessageDialog(null,"La boisson "+name+ " a été supprimée");
+        return true;
+    }
+    
+    private String selectBoisson(){
+        boolean fini = false;
+        String name ="";
+        while(fini == false){
+            name = c.controlStr("Voici les boissons contenues dans la machine :\n"
+                                + this.getBoissons()
+                                + "Aucune : Quitter\n"
+                                + "Quelle boisson voulez-vous modifier ?", "Nom de boisson invalide");
+            
+            if(!"Quitter".equals(name)){
+                if(c.controlNamedBoiss(name, "Cette boisson n'est pas dans la machine", boissons, true)){
+                    fini = true;
+                }
+            }else{fini=true;}
+        }
+        return name;
     }
     
     //Getters et Setters

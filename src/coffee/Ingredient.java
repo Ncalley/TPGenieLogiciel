@@ -51,6 +51,13 @@ class Ingredient  {
         return nom + " : " + quantite + " Unites ";
     }
     
+    public String getData(){
+        StringBuffer str = new StringBuffer(13+25*10+35);
+        str.append(nom);
+        str.append(",");
+        str.append(quantite);
+        return  str.toString();
+    }
     /**
      * Enlève i quantité d'ingrédient à cet ingrédient
      * @param i 

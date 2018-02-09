@@ -86,8 +86,7 @@ public class Coffee {
                     m.modifierBoisson();
                     break;
                 case "4" : 
-                    JOptionPane.showMessageDialog(null,"Fonctionnalité en développement, revenez un peu plus tard ;)"  );
-                    //m.supprimerBoisson();
+                    m.supprimerBoisson();
                     break;
                 case "5" :
                     m.addIngredient(m.createIngredient());

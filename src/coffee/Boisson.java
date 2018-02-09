@@ -76,6 +76,18 @@ class Boisson {
         return  str.toString();
     }
 
+    public String getData(){
+        StringBuffer str = new StringBuffer(13+25*10+35);
+        str.append("B;");
+        str.append(nom);
+        for(Ingredient i : ingredients){
+            str.append(";");
+            str.append(i.toString());
+        }
+        str.append(";");
+        str.append(this.prix);
+        return  str.toString();
+    }
     
     /**
      * Retourne le nom de la fonction
