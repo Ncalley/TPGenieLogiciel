@@ -10,6 +10,7 @@ class Machine {
 	private ArrayList<Boisson> boissons = new ArrayList();
 	private ArrayList<Ingredient> stocks = new ArrayList();
         private int maxBoisson = 5;
+        private final Controller c = new Controller();
 
 
 
@@ -30,22 +31,22 @@ class Machine {
      * Permet à l'utilisateur de choisir sa boisson et de commander
      */
     public void acheterBoisson() {
-        System.out.println(this.getBoissons());
+        
         String choix = (JOptionPane.showInputDialog(null,"Quelle boisson voulez-vous ? \n "
                 + this.getBoissons()
                 + "Quitter"));
         Boisson b = new Boisson(choix);
         boolean found = false;
+        
         for (Boisson boisson : boissons ) {
             if (b.equals(boisson)) {
                 try{
-                    //System.out.println(boisson.toString());
+                    
                     this.acheter(boisson);
                     found = true;
                 }catch(Exception e){
-                    JOptionPane.showMessageDialog(null,e.toString()+"\n"
+                    JOptionPane.showMessageDialog(null,e.getMessage()+"\n"
                             + "Votre boisson n'est pas disponible, veuillez réessayer"  );
-//                    acheterBoisson();
                 }
             }
         }
@@ -100,18 +101,13 @@ class Machine {
         while(fini == false){
             name = (JOptionPane.showInputDialog(null,"Veuillez choisir un nom de boisson"));
             
-            if(boissons.contains(new Boisson(name))|| name.equals("Quitter")){
+            if(boissons.contains(new Boisson(name))|| !c.control(name)){
                 JOptionPane.showMessageDialog(null,"Cette boisson existe déjà ou son nom est invalide");
             }else{
                 fini = true;
             }
         }
-   	int price=0;
-        try{
-            price = Integer.parseInt(JOptionPane.showInputDialog(null,"Quel sera le prix de cette boisson?"));
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null,"Prix invalide");
-        }
+   	int price = c.controlInt("Quel sera le prix de cette boisson?", "Prix invalide, veuillez réessayer");
    	 
    	 
    	ArrayList<Ingredient> ib = new ArrayList();
