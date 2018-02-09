@@ -51,8 +51,7 @@ public class Coffee {
  public static void startMenu(Machine m) {
         Scanner sc = new Scanner(System.in);
         boolean fini = false;
-            
-        JOptionPane.showMessageDialog(null,"Machine à café prête !");
+
         JOptionPane.showMessageDialog(null,"Bienvenue dans notre super machine à café!");
         while (fini == false){
         String choix = (JOptionPane.showInputDialog(null,"Que voulez vous faire ? \n "
@@ -102,17 +101,8 @@ public class Coffee {
                     //resetStock(m);
                     break;
                 case "8" :
-                    int q=0;
-                    try{
-                        q = Integer.parseInt(JOptionPane.showInputDialog(null,"Combien d'unité voulez-vous ajouter à chaque ingrédient du stock?"));
-                    }catch (Exception e){
-                        JOptionPane.showMessageDialog(null,"Quantité invalide");
-                    }
-                    if(q<0){
-                        JOptionPane.showMessageDialog(null,"Quantité invalide");
-                    }else{
-                        m.resupplyAll(q);
-                    }
+                    m.resupplyAll(m.getController().control("Combien d'unité voulez-vous ajouter à chaque ingrédient du stock?", "Quantité invalide"));
+                    break;
                 case "9" :
                     JOptionPane.showMessageDialog(null,"Merci d'avoir utilisé notre machine à café, à la prochaine fois!"  );
                     fini = true;
