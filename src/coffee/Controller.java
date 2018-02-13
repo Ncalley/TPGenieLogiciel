@@ -21,7 +21,7 @@ public class Controller {
      * @return 
      */
     public boolean control(String s){
-        if(s==null || s.equals("") || s.equals("B")){
+        if(s==null || s.equals("") || s.equals("B") || s.equals("Max")){
             return false;}
         
         return true;

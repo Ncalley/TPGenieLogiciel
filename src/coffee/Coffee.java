@@ -5,6 +5,7 @@
  */
 package coffee;
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -42,6 +43,8 @@ public class Coffee {
         m.ajouterBoisson(new Boisson(i2,"cafe",2));
         
         //System.out.println(m.getBoissons());
+        
+        
         
         startMenu(m);
 //        m.acheterBoisson();

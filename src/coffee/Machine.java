@@ -9,19 +9,35 @@ class Machine {
 	private ArrayList<Ingredient> stocks = new ArrayList();
         private int maxBoisson = 5;
         private final Controller c = new Controller();
+        private final FileManager f = new FileManager();
 
 
 
+    public Machine(final ArrayList<Boisson> boissons, final ArrayList<Ingredient> stocks, final int maxBoisson) {
+        this.boissons = boissons;
+        this.stocks = stocks;
+        this.maxBoisson = maxBoisson;
+    }    
+        
     public Machine(final ArrayList<Ingredient> stocks, final int maxBoisson) {
+        ArrayList data[] = f.loadLocal();
+        this.boissons = data[0];
         this.stocks = stocks;
         this.maxBoisson = maxBoisson;
     }
 
     public Machine(final int maxBoisson) {
+        ArrayList data[] = f.loadLocal();
+        this.boissons = data[0];
+        this.stocks = data[1];
         this.maxBoisson = maxBoisson;
     }
     
     public Machine() {
+        ArrayList data[] = f.loadLocal();
+        this.boissons = data[0];
+        this.stocks = data[1];
+        this.maxBoisson = (int)data[2].get(0);
     }
 
     /**
@@ -83,6 +99,7 @@ class Machine {
                 }
             }
         }
+        store();
         JOptionPane.showMessageDialog(null,"Voici votre boisson : "+ b.getNom() + " vous devez payer : "+ b.getPrix() + " €");
     }
     
@@ -94,6 +111,7 @@ class Machine {
     public void ajouterBoisson(Boisson b){
         if(boissons.size() <= maxBoisson){
             boissons.add(b);
+            store();
         } else{
             JOptionPane.showMessageDialog(null,"Nombre maximum de boissons disponibles dans la machine atteint.\nAjout échoué.");
         }
@@ -112,7 +130,7 @@ class Machine {
    	
    	Boisson b = new Boisson(c.control(boissons, stocks), name, price);
    	 
-   	JOptionPane.showMessageDialog(null,"La boisson "+b.getNom()+ " a été ajoutée");
+   	JOptionPane.showMessageDialog(null,"La boisson "+b.getNom()+ " a été créée");
    	
     	return b;
     }
@@ -126,6 +144,7 @@ class Machine {
                                 + "Quel ingrédient voulez-vous ajouter ?","Nom invalide",stocks);
         int q = c.control("Combien d'unité de "+name+" voulez-vous ajouter ?", "Quantité invalide", true);
         stocks.get(stocks.indexOf(new Ingredient(name,q))).resupply(q);
+        store();
         JOptionPane.showMessageDialog(null,q+ " unité(s) de l'ingredient "+name+ " a(ont) été ajoutée(s)");
     } 
     
@@ -137,6 +156,7 @@ class Machine {
         for(Ingredient i : stocks){
             stocks.get(stocks.indexOf(i)).resupply(quantite);
         }
+        store();
         JOptionPane.showMessageDialog(null,quantite+ " unité(s) de chaque ingrédient ont été ajoutées");
     }
     
@@ -146,6 +166,7 @@ class Machine {
      */
     public void addIngredient(Ingredient i){
        stocks.add(i);
+       store();
     }
     
     /**
@@ -187,8 +208,8 @@ class Machine {
         Boisson b = new Boisson(c.control(boissons, stocks), name, price);
         this.boissons.remove(b);
    	this.ajouterBoisson(b);
-         
-   	 JOptionPane.showMessageDialog(null,"La boisson "+b.getNom()+ " a été modifiée");
+        store(); 
+   	JOptionPane.showMessageDialog(null,"La boisson "+b.getNom()+ " a été modifiée");
    	return true;
         
     }
@@ -198,6 +219,7 @@ class Machine {
         if("Quitter".equals(name)){return false;}
         
         this.boissons.remove(new Boisson(name));
+        store();
         JOptionPane.showMessageDialog(null,"La boisson "+name+ " a été supprimée");
         return true;
     }
@@ -218,6 +240,14 @@ class Machine {
             }else{fini=true;}
         }
         return name;
+    }
+    
+    private void store(){
+        try{
+            f.storeLocal(boissons, stocks, maxBoisson);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
     }
     
     //Getters et Setters
