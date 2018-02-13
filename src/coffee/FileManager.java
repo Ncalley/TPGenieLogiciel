@@ -23,14 +23,25 @@ import java.util.logging.Logger;
  */
 public class FileManager {
     private final String SAVEFILE = "Data/data.csv"; 
-    private final Crypter CRYPTER = new Crypter("Machine à café de OOOUUUUFFF");
+    private final Crypter CRYPTER = new Crypter("Machine à café de OOOUUUUFFF"); // pas génial qu'il soit ici mais bon... pas le temps
 
+    
+    /**
+     * Le constructeur construit le fichier data qui contiendra les données
+     */
     public FileManager() {
         String path="Data//";
         new File(path).mkdirs();
     }
     
-    
+    /**
+     * Fonction de chargement du fichier utilisable par la machine
+     * renvoie un tableau de données contenant:
+     *  - Une liste de boissons
+     *  - Une liste d'ingrédients
+     *  - Une liste qui contient uniquement l'entier correspondant au nombre maximal de boissons
+     * @return ArrayList[]
+     */
     public ArrayList[] loadLocal() {
         ArrayList data[] = {new ArrayList<Boisson>(),new ArrayList<Ingredient>(), new ArrayList()};
         try{
@@ -40,17 +51,16 @@ public class FileManager {
                 storeLocal(new ArrayList(), new ArrayList(), 3);
                 return getData(SAVEFILE);
             }catch(Exception e1){
-                System.out.println("tryFile");
+                e.printStackTrace();
             }
-            
         }catch(Exception e){
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         return data;
     }
     
     /**
-     * Permet de recuperer toutes les donnees des comptes enregistres pour les sauvegarder en csv
+     * Fonction d'enregistrement des données dans un format (une LinkedList de String) qui permet l'écriture dans un fichier csv.
      * @param boissons
      * @param stocks
      * @throws java.lang.Exception
@@ -89,7 +99,8 @@ public class FileManager {
     
 
     /**
-     * Remplit le HashMap identifiers avec le contenu du fichier donné
+     * Fonction de lecture du fichier qui renvoie les données extraites à la fontion loadLocal()
+     * non accessible hors de cette classe.
      * @param fileName 
      */
     private ArrayList[] getData(String fileName) throws Exception{
@@ -106,9 +117,7 @@ public class FileManager {
             while ((ligne=br.readLine())!=null){ // pour chaque ligne
                 //On suppose que les mots sont séparés par des retours à la ligne
                 ligne = CRYPTER.decrypt(ligne);
-                
                 splitLine = ligne.split(";");
-                
                 //cas où ce n'est pas une boisson
                 if(!splitLine[0].equals("B")){
                     System.out.println(splitLine[0]);
@@ -143,23 +152,19 @@ public class FileManager {
                 x=0;
             }
         }
-        System.out.println("Boissons :");
         for(Boisson b : (ArrayList<Boisson>)data[0]){
             System.out.println(b.toString());
         }
-        System.out.println("Ingredients :");
         for(Ingredient b : (ArrayList<Ingredient>)data[1]){
             System.out.println(b.toString());
         }
-			
-	
         return data;
     }
     
    
     
     /**
-     * Permet de supprimer tous les comptes en mémoire (dangereux)
+     * Permet de supprimer le contenu du fichier (dangereux)
      */
     public void clean(){
         

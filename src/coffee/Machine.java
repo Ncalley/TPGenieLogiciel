@@ -295,5 +295,4 @@ class Machine {
     
     //TODO :
     // Possibilité de modifier le niveau de sucre par boisson
-    // Persistance des ingrédients dans un fichier ou une bdd
 }
