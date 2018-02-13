@@ -26,23 +26,7 @@ public class Coffee {
     public static void main(String[] args) {
         // TODO code application logic here
         Machine m = new Machine(5);
-        ArrayList<Ingredient> i = new ArrayList();
-        i.add(new Ingredient("Lait",1));
-        i.add(new Ingredient("Eau",1));
-        i.add(new Ingredient("Sucre",1));
-        i.add(new Ingredient("chocolat",1));
-        i.add(new Ingredient("Cafe",1));
         
-        m.setStocks(i);
-        //m.resupplyAll(25);
-
-        ArrayList<Ingredient> i2 = new ArrayList();
-        i2.add(new Ingredient("Eau",2));
-        i2.add(new Ingredient("Sucre",1));
-        i2.add(new Ingredient("Cafe",1));
-        m.ajouterBoisson(new Boisson(i2,"cafe",2));
-        
-        //System.out.println(m.getBoissons());
         
         
         

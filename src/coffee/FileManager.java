@@ -106,22 +106,22 @@ public class FileManager {
             while ((ligne=br.readLine())!=null){ // pour chaque ligne
                 //On suppose que les mots sont séparés par des retours à la ligne
                 ligne = CRYPTER.decrypt(ligne);
-                System.out.println(ligne);
-                System.out.println("x="+x);
+                
                 splitLine = ligne.split(";");
                 
                 //cas où ce n'est pas une boisson
                 if(!splitLine[0].equals("B")){
+                    System.out.println(splitLine[0]);
                     //si c'est le nombre maxBoisson
-                    if(splitLine[0].equals("Max")){
-                        splitElt = splitLine[0].split(",");
+                    splitElt = splitLine[0].split(",");
+                    if(splitElt[0].equals("Max")){
+                        
                         data[2].add(Integer.parseInt(splitElt[1]));
                     }else{
-                        splitElt = splitLine[0].split(",");
-                        data[1].add(new Ingredient(splitElt[0],Integer.parseInt(splitElt[1])));
+                        if(!data[1].contains(new Ingredient(splitElt[0],0))){
+                            data[1].add(new Ingredient(splitElt[0],Integer.parseInt(splitElt[1])));
+                        }
                     }
-                    //x++;
-                    System.out.println("x="+x);
                 }else{
                     //cas où c'est une boisson
                     ArrayList<Ingredient> ingredients = new ArrayList();
@@ -134,12 +134,12 @@ public class FileManager {
                         }
                         
                         x++;
-                        System.out.println("x="+x);
+                        
                     }
-                    data[0].add(new Boisson(ingredients,splitLine[1],Integer.parseInt(splitLine[splitLine.length-1])));
+                    if(!data[0].contains(new Boisson(splitLine[1]))){
+                        data[0].add(new Boisson(ingredients,splitLine[1],Integer.parseInt(splitLine[splitLine.length-1])));
+                    }
                 }
-                    
-                
                 x=0;
             }
         }
