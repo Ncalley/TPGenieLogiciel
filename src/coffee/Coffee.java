@@ -6,37 +6,29 @@
 package coffee;
 
 
-import java.util.ArrayList;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 
 /**
- *
+ * Programme principal de la machine à café
  * @author Nicolas
  */
 public class Coffee {
-	
-    //Scanner sc = new Scanner(System.in);
-
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         Machine m = new Machine(5);
-        
-        
-        
-        
         startMenu(m);
-//        m.acheterBoisson();
         
     }
-    
+ 
+    /**
+     * Méthode de démarrage de la machine, consiste en un grand menu reprédentant toutes les options de la machine. 
+     * @param m la machine
+     */
  public static void startMenu(Machine m) {
-        Scanner sc = new Scanner(System.in);
         boolean fini = false;
 
         JOptionPane.showMessageDialog(null,"Bienvenue dans notre super machine à café!");

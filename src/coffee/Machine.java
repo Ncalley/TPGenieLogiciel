@@ -11,7 +11,7 @@ class Machine {
         private final Controller c = new Controller();
         private final FileManager f = new FileManager();
 
-
+    //constructeurs
 
     public Machine(final ArrayList<Boisson> boissons, final ArrayList<Ingredient> stocks, final int maxBoisson) {
         this.boissons = boissons;
@@ -40,6 +40,8 @@ class Machine {
         this.maxBoisson = (int)data[2].get(0);
     }
 
+    //méthodes
+    
     /**
      * Fonction d'achat de boisson
      * Permet à l'utilisateur de choisir sa boisson et de commander
@@ -99,6 +101,7 @@ class Machine {
                 }
             }
         }
+        sugarLevel();
         store();
         JOptionPane.showMessageDialog(null,"Voici votre boisson : "+ b.getNom() + " vous devez payer : "+ b.getPrix() + " €");
     }
@@ -181,8 +184,9 @@ class Machine {
             name = c.controlStr("Veuillez choisir un nom d'ingredient", "Nom d'ingrédient invalide");
             if(c.controlNamedIng(name, "Ingrédient déjà dans le stock", stocks, false)){valid=true;}
         }
+        boolean liquid = c.controlBool("Est-ce un ingrédient liquide?", "Votre réponse est invalide, veuillez réessayer");
         int q = c.control("Combien d'unité de cet ingrédient voulez vous mettre dans le stock?", "Quantité invalide", true);
-   	Ingredient i = new Ingredient(name,q);
+   	Ingredient i = new Ingredient(name,q, liquid);
    	if(q==0){
             JOptionPane.showMessageDialog(null,"Ingredient "+i.getNom()+ " créé");
         }else{
@@ -214,6 +218,10 @@ class Machine {
         
     }
     
+    /**
+     * Permet de supprimer une boisson si elle existe dans la machine
+     * @return 
+     */
     public boolean supprimerBoisson(){
         String name = selectBoisson();
         if("Quitter".equals(name)){return false;}
@@ -224,6 +232,10 @@ class Machine {
         return true;
     }
     
+    /**
+     * Méthode privée qui permet de sélectionner une boisson parmi les boissons entrées dans la machine
+     * @return 
+     */
     private String selectBoisson(){
         boolean fini = false;
         String name ="";
@@ -242,6 +254,31 @@ class Machine {
         return name;
     }
     
+    /**
+     * Méthode d'ajout de sucre dans la boisson
+     * Permet d'ajouter entre 1 et 5 unités de Sucre à la boisson
+     * Indique à l'utilisateur si le sucre n'est pas présent ou présent en quantité insuffisante.
+     */
+    private void sugarLevel(){
+        int level = 0;
+        if(stocks.contains(new Ingredient("Sucre",0))){
+            do{
+                level = c.control("Quelle quantité de sucre voulez-vous ajouter à la boisson ?\n(par défaut 0, maximum 5)", "Quantité entrée invalide, veuillez réessayer.", true);
+            }while(!(0 <= level && level < 6));
+            try{
+                stocks.get(stocks.indexOf(new Ingredient("Sucre",0))).decrease(level);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"La machine ne contient pas de sucre, vous ne pouvez pas ajouter de sucre à cette boisson");
+        }
+    }
+    
+    /**
+     * Permet de sauvegarder les données via le FileManager
+     */
     private void store(){
         try{
             f.storeLocal(boissons, stocks, maxBoisson);
@@ -292,7 +329,4 @@ class Machine {
         return c;
     }
     
-    
-    //TODO :
-    // Possibilité de modifier le niveau de sucre par boisson
 }

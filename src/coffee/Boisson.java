@@ -14,6 +14,7 @@ class Boisson {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private int prix;
 
+    //constructeurs
     public Boisson(final ArrayList<Ingredient> ingredients, final String nom, final int prix) {
 
 	this.ingredients = ingredients;
@@ -29,7 +30,21 @@ class Boisson {
     public Boisson(String nom) {
         this.nom = nom;
     }
+    
+    //méthodes
 
+    /**
+     * Retourn vrai si la boisson contient au moins un élément liquide, faux sinon
+     * @return 
+     */
+    public boolean containsLiquide(){
+        for(Ingredient elt: ingredients){
+            if(elt.isLiquide()){
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Redéfinition du Hashcode correspondant au equals
      * @return int
@@ -64,6 +79,10 @@ class Boisson {
         return true;
     }
 
+    /**
+     * Permet d'afficher la boisson, son contenu et son prix
+     * @return 
+     */
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer(13+25*10+35);
@@ -76,6 +95,10 @@ class Boisson {
         return  str.toString();
     }
 
+    /**
+     * Renvoie le contenu de la boisson dans un format compréhensible par le FileManager
+     * @return 
+     */
     public String getData(){
         StringBuffer str = new StringBuffer(13+25*10+35);
         str.append("B;");
@@ -90,17 +113,25 @@ class Boisson {
     }
     
     /**
-     * Retourne le nom de la fonction
+     * Retourne le nom de la boisson
      * @return 
      */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * Retourne la liste contenant les ingrédients de la boisson 
+     * @return 
+     */
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
+    /**
+     * Retourne la prix de la boisson
+     * @return 
+     */
     public int getPrix() {
         return prix;
     }

@@ -10,13 +10,23 @@ class Ingredient  {
 
 	private String nom;
 	private int quantite;
+        private final boolean isLiquide;
 
-    
+    //constructeurs
+    public Ingredient(final String nom, final int quantite, final boolean isLiquide) {
+        this.nom = nom;
+        this.quantite = quantite;
+        this.isLiquide = isLiquide;
+    }    
+        
     public Ingredient(final String nom, final int quantite) {
         this.nom = nom;
         this.quantite = quantite;
+        this.isLiquide = false;
     }
 
+    //méthodes
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -24,6 +34,11 @@ class Ingredient  {
         return hash;
     }
 
+    /**
+     * Deux ingrédients du même nom sont les mêmes
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -79,13 +94,27 @@ class Ingredient  {
     
     //getters / setters
     
+    /**
+     * Retourne le nom de cet ingrédient
+     * @return 
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * Retourne la quantité de cet ingrédient
+     * @return 
+     */
     public int getQuantite() {
         return quantite;
     }
 
-    
+    /**
+     * Retourne vrai si l'ingrédient est liquide et faux sinon
+     * @return 
+     */
+    public boolean isLiquide(){
+        return isLiquide;
+    }
 }

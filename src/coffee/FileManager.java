@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Logger;
+
 /**
  * Gère la lecture et l'écriture des fichiers
  * @author Nicolas
@@ -25,7 +26,7 @@ public class FileManager {
     private final String SAVEFILE = "Data/data.csv"; 
     private final Crypter CRYPTER = new Crypter("Machine à café de OOOUUUUFFF"); // pas génial qu'il soit ici mais bon... pas le temps
 
-    
+    //constructeurs
     /**
      * Le constructeur construit le fichier data qui contiendra les données
      */
@@ -34,6 +35,7 @@ public class FileManager {
         new File(path).mkdirs();
     }
     
+    //méthodes
     /**
      * Fonction de chargement du fichier utilisable par la machine
      * renvoie un tableau de données contenant:

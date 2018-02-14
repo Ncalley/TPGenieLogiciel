@@ -15,16 +15,23 @@ import javax.swing.JOptionPane;
  */
 public class Controller {
     
+    //méthodes
+    
     /**
      * Vérification de la string entrée a une valeur non nulle
      * @param s
      * @return 
      */
     public boolean control(String s){
-        if(s==null || s.equals("") || s.equals("B") || s.equals("Max")){
-            return false;}
-        
-        return true;
+        if(s==null){return false;}
+        switch(s){
+            case "":
+            case "B":
+            case "Max":
+                return false;
+            default :
+                return true;
+        }
     }
     
     /**
@@ -37,18 +44,26 @@ public class Controller {
     public ArrayList<Ingredient> control(ArrayList<Boisson> b, ArrayList<Ingredient> stocks){
         ArrayList<Ingredient> ib = new ArrayList();
    	boolean done = false;
+        boolean liquid = false;
         int q = 0;
         while(!done){
             for (Ingredient i : stocks) {
                     
                 //pour chaque ingrédient, s'il est valide on l'ajoute
                 q = this.control("Combien d'unité de "+ i.getNom() +" voulez-vous ajouter ?", "Quantité invalide", true);
-                if(q!=0){ ib.add(new Ingredient(i.getNom(), q));}
+                if(q!=0){
+                    ib.add(new Ingredient(i.getNom(),q,i.isLiquide()));
+                    if(i.isLiquide()){liquid = true;}
+                }
                     
             }
             //vérifier que la liste des ingrédients n'est pas nulle
             if(!ib.isEmpty()){
-                done=true;
+                if(!liquid){
+                    JOptionPane.showMessageDialog(null,"Vous ne pouvez pas créer de boisson sans ingrédient liquide.\nVeuillez réessayer.");
+                }else{
+                    done=true;
+                }
             }else{
                 JOptionPane.showMessageDialog(null,"Vous ne pouvez pas créer de boisson sans ingrédient.\nVeuillez réessayer.");
             }
@@ -87,10 +102,11 @@ public class Controller {
                 juste= false;
             }
             if(!isNullValid){
-                if(price<=0){
+                if(price==0){
                     juste=false;
                 }
             }
+            if(price<0)
             if(!juste){JOptionPane.showMessageDialog(null,wrong);}
         }
         return price;
@@ -128,6 +144,7 @@ public class Controller {
         }
         return name;
     }
+    
     
     /**
      * Surcharge de la méthode ci dessus ave l'option par défaut contenu dans la liste
@@ -241,5 +258,40 @@ public class Controller {
             
         }
         return name;
+    }
+    
+    /**
+     * Fonction de contrôle d'un booléen entré au clavier
+     * @param question
+     * @param wrong
+     * @return 
+     */
+    public boolean controlBool(String question, String wrong){
+        String name = "";
+        boolean fini = false;
+        while(true){
+            name = JOptionPane.showInputDialog(null,question);
+            
+            if(!this.control(name)){
+                JOptionPane.showMessageDialog(null,wrong);
+                
+            }else{
+                switch(name){
+                    case "true":
+                    case "True":
+                    case "oui":
+                    case "Oui":
+                    case "O":
+                        return true;
+                    case "false":
+                    case "False":
+                    case "non":
+                    case "Non":
+                    case "N":
+                        return false;
+                }
+            }
+            
+        }
     }
 }
