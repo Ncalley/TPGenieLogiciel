@@ -4,7 +4,7 @@
 
 ## Description
 
-- Ecrire un logiiel qui gere le fonctionnement d'une machine a cafe 
+- Ecrire un logiciel qui gere le fonctionnement d'une machine a cafe 
 - Pour une association d'etudiants
 - Interface homme-machine basique en lignes de commandes
 
@@ -18,4 +18,10 @@
 - Supprimer boisson
 - Ajouter ingredient
 - Verifier stocks ingredients
+- Augmenter la quantite d'un ingredient du stock
+- Augmenter la quantité de tous les ingredients du stock
 ```
+
+## Pre-requis
+
+Java 8 : 
